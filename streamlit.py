@@ -1,21 +1,49 @@
 import streamlit as st
 import pandas as pd
-import shap
 import matplotlib.pyplot as plt
-from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 
-st.write("""
-# Boston House Price Prediction App
-
-This app predicts the **Boston House Price**!
+st.tittle("""
+# Pakistan House Price Prediction App
 """)
 st.write('---')
 
-# Loads the Boston House Price Dataset
-boston = datasets.load_boston()
-X = pd.DataFrame(boston.data, columns=boston.feature_names)
-Y = pd.DataFrame(boston.target, columns=["MEDV"])
+url = 'https://drive.google.com/file/d/1HPzLNrEIBduaatuEsf7EDWJ2_J0f4T2N/view?usp=sharing'
+url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
+data = pd.read_csv(url)
+
+data = data.drop(columns=['property_id','page_url', 'location_id', 'province_name', 'latitude', 'longitude', 'date_added', 'agency', 'agent','Area Category' ])
+data.head()
+data.drop_duplicates(inplace=True)
+data.dropna(inplace=True)
+data.drop(data[data['price']==0].index, inplace = True)
+data.drop(data[data['baths']==0].index, inplace = True)
+data.drop(data[data['bedrooms']==0].index, inplace = True)
+data.drop(data[data['Area Size']==0].index, inplace = True)
+
+data['Area Size'] = data.apply(lambda row: row['Area Size'] * 272.51
+                               if row['Area Type'] == 'Marla'
+                               else row['Area Size'] * 5445, axis=1)
+data.drop(['Area Type'], axis = 1, inplace = True)
+
+X_data = data.select_dtypes(include=['float64', 'int64'])
+Q1 = X_data.quantile(0.25)
+Q3 = X_data.quantile(0.75)
+IQR = Q3 - Q1
+outlier_condition = (X_data < (Q1 - 1.5 * IQR)) | (X_data > (Q3 + 1.5 * IQR))
+data = data[~outlier_condition.any(axis=1)]
+
+scaler = MinMaxScaler()
+data[['price_scaled', 'area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(data[['price', 'Area Size', 'baths', 'bedrooms']])
+data = data.drop(columns=['price', 'Area Size', 'baths', 'bedrooms'])
+
+X = data[['area_scaled', 'baths_scaled', 'bedrooms_scaled']]
+y = data['price_scaled']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Sidebar
 # Header of Specify Input Parameters
