@@ -38,7 +38,7 @@ scaler = MinMaxScaler()
 data[['price_scaled', 'area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(data[['price', 'Area Size', 'baths', 'bedrooms']])
 data = data.drop(columns=['price', 'Area Size', 'baths', 'bedrooms'])
 
-X = data.drop(['price_scaled', axis = 1])
+X = data.drop(['price_scaled')
 y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
