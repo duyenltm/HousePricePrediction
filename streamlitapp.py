@@ -54,7 +54,7 @@ st.form(property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse',
         area_size = st.number_input('Area Size', 0, 1000))
 st.form_submit_button(label="Submit")
 
-  data = {'property_type': property_type,
+data = {'property_type': property_type,
             'ZN': ZN,
             'INDUS': INDUS,
             'CHAS': CHAS,
