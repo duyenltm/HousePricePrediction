@@ -1,13 +1,12 @@
 import streamlit as st
 import pandas as pd
+import xgboost as xgb
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 
-st.title("""
-Pakistan House Price Prediction App
-""")
+st.title('Pakistan House Price Prediction')
 st.write('---')
 
 url = 'https://drive.google.com/file/d/1HPzLNrEIBduaatuEsf7EDWJ2_J0f4T2N/view?usp=sharing'
@@ -44,11 +43,19 @@ y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Sidebar
-# Header of Specify Input Parameters
-st.sidebar.header('Specify Input Parameters')
+property_type	= st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
+       'Lower Portion', 'Room'])
+#location = 
+city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
+baths = st.sliders('Baths',1,10)
+purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
+bedrooms = st.sliders('Bedrooms',1,10)
+Area Type = st.pills('Area Type', ['Marla', 'Kanal'])
+Area Size = st.number_input('Area Size',1,1000)
 
-def user_input_features():
+def input():
+  property_type	= st.segmented_control('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
+       'Lower Portion', 'Room']
     CRIM = st.sidebar.slider('CRIM', X.CRIM.min(), X.CRIM.max(), X.CRIM.mean())
     ZN = st.sidebar.slider('ZN', X.ZN.min(), X.ZN.max(), X.ZN.mean())
     INDUS = st.sidebar.slider('INDUS', X.INDUS.min(), X.INDUS.max(), X.INDUS.mean())
@@ -78,7 +85,7 @@ def user_input_features():
     features = pd.DataFrame(data, index=[0])
     return features
 
-df = user_input_features()
+df = input()
 
 # Main Panel
 
@@ -88,10 +95,19 @@ st.write(df)
 st.write('---')
 
 # Build Regression Model
-model = RandomForestRegressor()
-model.fit(X, Y)
+xgb_model = xgb.XGBRegressor(objective='reg:squarederror', random_state=42)
+xgb_model.fit(X_train, y_train)
+y_pred_xgb = xgb_model.predict(X_test)
 # Apply Model to Make Prediction
 prediction = model.predict(df)
+
+# Dự đoán (trong không gian đã scale)
+y_pred_scaled = model.predict(X_scaled)
+
+# Đảo ngược scale cho kết quả dự đoán
+y_pred_original = scaler_y.inverse_transform(y_pred_scaled.reshape(-1, 1))
+
+
 
 st.header('Prediction of MEDV')
 st.write(prediction)
