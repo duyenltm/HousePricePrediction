@@ -46,12 +46,11 @@ y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-st.form(
-  property_type	= st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
-         'Lower Portion', 'Room'])
-  location = st.selectbox('Location', 
-  city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
-  baths = st.sliders('Baths', X.baths.min(), X.baths.max())
+st.form(property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
+         'Lower Portion', 'Room']),
+        location = st.selectbox('Location', 
+        city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi']),
+        baths = st.sliders('Baths', X.baths.min(), X.baths.max())
   purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
   bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max())
   Area Type = st.pills('Area Type', ['Marla', 'Kanal'])
