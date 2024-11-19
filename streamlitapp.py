@@ -46,13 +46,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 st.form(property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
          'Lower Portion', 'Room']),
         location = st.selectbox('Location', 
-        city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi']),
+        city = st.segmented_control('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi']),
         baths = st.sliders('Baths', X.baths.min(), X.baths.max()),
-        purpose = st.pills('Purpose', ['For Sale', 'For Rent']),
+        purpose = st.segmented_control('Purpose', ['For Sale', 'For Rent']),
         bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max()),
-        Area Type = st.pills('Area Type', ['Marla', 'Kanal']),
-        Area Size = st.number_input('Area Size', 0, 1000),
-        st.form_submit_button(label="Submit")
+        Area Type = st.segmented_control('Area Type', ['Marla', 'Kanal']),
+        Area Size = st.number_input('Area Size', 0, 1000))
+st.form_submit_button(label="Submit")
 
   data = {'property_type': property_type,
             'ZN': ZN,
