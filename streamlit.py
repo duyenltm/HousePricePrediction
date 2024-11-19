@@ -1,5 +1,5 @@
 import streamlit as st
-st.tittle("""
+st.title("""
 # Pakistan House Price Prediction App
 """)
 st.write('---')
