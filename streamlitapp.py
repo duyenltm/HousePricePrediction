@@ -50,8 +50,8 @@ st.form(property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse',
         baths = st.sliders('Baths', X.baths.min(), X.baths.max()),
         purpose = st.segmented_control('Purpose', ['For Sale', 'For Rent']),
         bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max()),
-        Area Type = st.segmented_control('Area Type', ['Marla', 'Kanal']),
-        Area Size = st.number_input('Area Size', 0, 1000))
+        area_type = st.segmented_control('Area Type', ['Marla', 'Kanal']),
+        area_size = st.number_input('Area Size', 0, 1000))
 st.form_submit_button(label="Submit")
 
   data = {'property_type': property_type,
