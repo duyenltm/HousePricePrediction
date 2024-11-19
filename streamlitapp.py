@@ -6,9 +6,6 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 
-streamlit --version
-
-
 st.title('Pakistan House Price Prediction')
 st.write('---')
 
@@ -54,8 +51,9 @@ st.form(property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse',
         purpose = st.pills('Purpose', ['For Sale', 'For Rent']),
         bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max()),
         Area Type = st.pills('Area Type', ['Marla', 'Kanal']),
-        Area Size = st.number_input('Area Size', 0, 1000)
-st.form_submit_button(label="Submit")
+        Area Size = st.number_input('Area Size', 0, 1000),
+        st.form_submit_button(label="Submit")
+
   data = {'property_type': property_type,
             'ZN': ZN,
             'INDUS': INDUS,
