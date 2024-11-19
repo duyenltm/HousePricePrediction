@@ -5,7 +5,7 @@ import pandas as pd
 #from sklearn.preprocessing import LabelEncoder
 #from sklearn.ensemble import RandomForestRegressor
 
-st.tittle("""
+st.title("""
 Pakistan House Price Prediction App
 """)
 st.write('---')
