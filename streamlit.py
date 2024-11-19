@@ -1,18 +1,12 @@
 import streamlit as st
-st.title("""
-# Pakistan House Price Prediction App
-""")
-st.write('---')
-
-import streamlit as st
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import LabelEncoder
-from sklearn.ensemble import RandomForestRegressor
+#from sklearn.model_selection import train_test_split
+#from sklearn.preprocessing import MinMaxScaler
+#from sklearn.preprocessing import LabelEncoder
+#from sklearn.ensemble import RandomForestRegressor
 
 st.tittle("""
-# Pakistan House Price Prediction App
+Pakistan House Price Prediction App
 """)
 st.write('---')
 
