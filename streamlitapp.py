@@ -38,20 +38,22 @@ scaler = MinMaxScaler()
 data[['price_scaled', 'area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(data[['price', 'Area Size', 'baths', 'bedrooms']])
 data = data.drop(columns=['price', 'Area Size', 'baths', 'bedrooms'])
 
-X = data[['area_scaled', 'baths_scaled', 'bedrooms_scaled']]
+X = data.drop(['price_scaled', axis = 1])
 y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-property_type	= st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
-       'Lower Portion', 'Room'])
-#location = 
-city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
-baths = st.sliders('Baths',1,10)
-purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
-bedrooms = st.sliders('Bedrooms',1,10)
-Area Type = st.pills('Area Type', ['Marla', 'Kanal'])
-Area Size = st.number_input('Area Size',1,1000)
+st.form(
+  property_type	= st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
+         'Lower Portion', 'Room'])
+  #location = 
+  city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
+  baths = st.sliders('Baths', X.baths.min(), X.baths.max())
+  purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
+  bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max())
+  Area Type = st.pills('Area Type', ['Marla', 'Kanal'])
+  Area Size = st.number_input('Area Size', 0, 1000)
+st.form_submit_button(label="Submit")
 
 def input():
   property_type	= st.segmented_control('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
