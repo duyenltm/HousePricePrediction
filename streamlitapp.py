@@ -6,6 +6,9 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
 
+streamlit --version
+
+
 st.title('Pakistan House Price Prediction')
 st.write('---')
 
