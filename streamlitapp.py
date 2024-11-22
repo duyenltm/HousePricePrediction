@@ -63,7 +63,7 @@ def input():
           'purpose': purpose,
           'area_scaled': area,
           'baths_scaled': baths,
-          'bedrooms_scaled': bedrooms
+          'bedrooms_scaled': bedrooms}
   features = pd.DataFrame(data, index=[0])
   return features
 
