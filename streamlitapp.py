@@ -55,9 +55,8 @@ def input():
   bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max())
   area_type = st.segmented_control('Area Type', ['Marla', 'Kanal'])
   area_size = st.number_input('Area Size', 0, 1000)
-  area = (lambda row: area_size * 25.2929
-         if area_type == 'Marla'
-         else area_size * 505.858, axis=1)
+  if area_type == 'Marla': area = area_size * 25.2929
+    else area = area_size * 505.858
   data = {'property_type': property_type,
           'location': location,
           'city': city,
