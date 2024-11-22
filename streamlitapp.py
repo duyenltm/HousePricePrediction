@@ -43,8 +43,7 @@ y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
-         'Lower Portion', 'Room'])
+property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
         #location = st.selectbox('Location',
 city = st.segmented_control('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
 baths = st.sliders('Baths', X.baths.min(), X.baths.max())
@@ -54,19 +53,6 @@ area_type = st.segmented_control('Area Type', ['Marla', 'Kanal'])
 area_size = st.number_input('Area Size', 0, 1000)
 st.form_submit_button(label="Submit")
 
-data = {'property_type': property_type,
-            'ZN': ZN,
-            'INDUS': INDUS,
-            'CHAS': CHAS,
-            'NOX': NOX,
-            'RM': RM,
-            'AGE': AGE,
-            'DIS': DIS,
-            'RAD': RAD,
-            'TAX': TAX,
-            'PTRATIO': PTRATIO,
-            'B': B,
-            'LSTAT': LSTAT}
 def input():
   property_type	= st.segmented_control('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
        'Lower Portion', 'Room']
