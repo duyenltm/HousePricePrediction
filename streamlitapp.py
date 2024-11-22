@@ -43,47 +43,30 @@ y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
-        #location = st.selectbox('Location',
-city = st.segmented_control('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
-baths = st.sliders('Baths', X.baths.min(), X.baths.max())
-purpose = st.segmented_control('Purpose', ['For Sale', 'For Rent'])
-bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max())
-area_type = st.segmented_control('Area Type', ['Marla', 'Kanal'])
-area_size = st.number_input('Area Size', 0, 1000)
+
 st.form_submit_button(label="Submit")
 
 def input():
-  property_type	= st.segmented_control('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House',
-       'Lower Portion', 'Room']
-    CRIM = st.sidebar.slider('CRIM', X.CRIM.min(), X.CRIM.max(), X.CRIM.mean())
-    ZN = st.sidebar.slider('ZN', X.ZN.min(), X.ZN.max(), X.ZN.mean())
-    INDUS = st.sidebar.slider('INDUS', X.INDUS.min(), X.INDUS.max(), X.INDUS.mean())
-    CHAS = st.sidebar.slider('CHAS', X.CHAS.min(), X.CHAS.max(), X.CHAS.mean())
-    NOX = st.sidebar.slider('NOX', X.NOX.min(), X.NOX.max(), X.NOX.mean())
-    RM = st.sidebar.slider('RM', X.RM.min(), X.RM.max(), X.RM.mean())
-    AGE = st.sidebar.slider('AGE', X.AGE.min(), X.AGE.max(), X.AGE.mean())
-    DIS = st.sidebar.slider('DIS', X.DIS.min(), X.DIS.max(), X.DIS.mean())
-    RAD = st.sidebar.slider('RAD', X.RAD.min(), X.RAD.max(), X.RAD.mean())
-    TAX = st.sidebar.slider('TAX', X.TAX.min(), X.TAX.max(), X.TAX.mean())
-    PTRATIO = st.sidebar.slider('PTRATIO', X.PTRATIO.min(), X.PTRATIO.max(), X.PTRATIO.mean())
-    B = st.sidebar.slider('B', X.B.min(), X.B.max(), X.B.mean())
-    LSTAT = st.sidebar.slider('LSTAT', X.LSTAT.min(), X.LSTAT.max(), X.LSTAT.mean())
-    data = {'CRIM': CRIM,
-            'ZN': ZN,
-            'INDUS': INDUS,
-            'CHAS': CHAS,
-            'NOX': NOX,
-            'RM': RM,
-            'AGE': AGE,
-            'DIS': DIS,
-            'RAD': RAD,
-            'TAX': TAX,
-            'PTRATIO': PTRATIO,
-            'B': B,
-            'LSTAT': LSTAT}
-    features = pd.DataFrame(data, index=[0])
-    return features
+  property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
+        #location = st.selectbox('Location',
+  city = st.segmented_control('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
+  baths = st.sliders('Baths', X.baths.min(), X.baths.max())
+  purpose = st.segmented_control('Purpose', ['For Sale', 'For Rent'])
+  bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max())
+  area_type = st.segmented_control('Area Type', ['Marla', 'Kanal'])
+  area_size = st.number_input('Area Size', 0, 1000)
+  area = (lambda row: row['area_size'] * 25.2929
+         if row['area_type'] == 'Marla'
+         else row['area_size'] * 505.858, axis=1)
+  data = {'property_type': property_type,
+          'location': location,
+          'city': city,
+          'purpose': purpose,
+          'area_scaled': area,
+          'baths_scaled': baths,
+          'bedrooms_scaled': bedrooms
+  features = pd.DataFrame(data, index=[0])
+  return features
 
 df = input()
 
