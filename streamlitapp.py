@@ -54,11 +54,11 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 def input():
   property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
   location = st.selectbox('Location', ['a', 'b'])
-  city = st.segmented_control('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
-  baths = st.sliders('Baths', X.baths.min(), X.baths.max())
-  purpose = st.segmented_control('Purpose', ['For Sale', 'For Rent'])
-  bedrooms = st.sliders('Bedrooms', X.bedrooms.min(), X.bedrooms.max())
-  area_type = st.segmented_control('Area Type', ['Marla', 'Kanal'])
+  city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
+  baths = st.slider('Baths', X.baths.min(), X.baths.max())
+  purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
+  bedrooms = st.slider('Bedrooms', X.bedrooms.min(), X.bedrooms.max())
+  area_type = st.pills('Area Type', ['Marla', 'Kanal'])
   area_size = st.number_input('Area Size', 0, 1000)
   if area_type == 'Marla': area = area_size * 25.2929
   else: area = area_size * 505.858
