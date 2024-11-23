@@ -53,7 +53,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 def input():
   property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
-  location = st.selectbox('Location', ['a', 'b'])
+  location = st.selectbox('Location', data['location'].unique())
   city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
   baths = st.slider('Baths',1,7)
   purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
