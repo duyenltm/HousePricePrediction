@@ -73,7 +73,8 @@ def input():
   return features
 
 df = input()
-df_scaled = df
+st.write(df)
+df_scaled = scaler.fit_transform(df)
 
 Tree_reg = RandomForestRegressor(random_state=42)
 Tree_reg.fit(X_train, y_train)
