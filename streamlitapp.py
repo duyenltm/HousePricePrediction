@@ -54,14 +54,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 def input():
   with st.form("input_form"):
     st.header("Enter House Details")
-    property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
+    property_type = st.pills('Property Type', uni['property_type'].unique())
     location = st.selectbox('Location', uni['location'].unique())
-    city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
+    city = st.pills('City', uni['city'].unique())
     baths = st.slider('Baths',1,7)
-    purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
+    purpose = st.pills('Purpose', uni['purpose'].unique())
     bedrooms = st.slider('Bedrooms',1,7)
     area_size = st.numer_input('Area Size',1,1000)
-    area_type = st.pills('Area Type', ['Marla', 'Kanal'])
+    area_type = st.pills('Area Type', uni['area_type'].unique())
     area = area_size * 272.51 if area_type == 'Marla' else area_size * 5445
     submitted = st.form_submit_button("Submit")
     if submitted:
