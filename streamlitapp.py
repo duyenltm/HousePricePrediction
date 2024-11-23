@@ -86,7 +86,7 @@ best_model = joblib.load('best_model.pkl')
 
 prediction = best_model.predict(df_scaled)
 
-price = y.inverse_transform(prediction.reshape(-1, 1))
+price = scaler.inverse_transform(prediction.reshape(-1, 1))
 
 st.header('Prediction of MEDV')
 st.write(prediction)
