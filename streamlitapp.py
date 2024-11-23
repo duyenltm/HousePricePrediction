@@ -55,9 +55,9 @@ def input():
   property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
   location = st.selectbox('Location', ['a', 'b'])
   city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
-  baths = st.slider('Baths', X.baths.min(), X.baths.max())
+  baths = st.slider('Baths',1,7)
   purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
-  bedrooms = st.slider('Bedrooms', X.bedrooms.min(), X.bedrooms.max())
+  bedrooms = st.slider('Bedrooms',1,7)
   area_type = st.pills('Area Type', ['Marla', 'Kanal'])
   area_size = st.number_input('Area Size', 0, 1000)
   if area_type == 'Marla': area = area_size * 25.2929
