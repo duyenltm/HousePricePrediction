@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import xgboost as xgb
+import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
@@ -38,13 +38,16 @@ scaler = MinMaxScaler()
 data[['price_scaled', 'area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(data[['price', 'Area Size', 'baths', 'bedrooms']])
 data = data.drop(columns=['price', 'Area Size', 'baths', 'bedrooms'])
 
+le = LabelEncoder()
+data['purpose'] = le.fit_transform(data['purpose'])
+data['property_type'] = le.fit_transform(data['property_type'])
+data['city'] = le.fit_transform(data['city'])
+data['location'] = le.fit_transform(data['location'])
+
 X = data.drop(['price_scaled'])
 y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-
-st.form_submit_button(label="Submit")
 
 def input():
   property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
@@ -68,37 +71,21 @@ def input():
   return features
 
 df = input()
+df_scaled = df
 
-# Main Panel
+Ranfor_reg = RandomForestRegressor(random_state=42)
+Ranfor_reg.fit(X_train, y_train)
+y_pred = Ranfor_reg.predict(X_test)
+joblib.dump(Tree_reg, 'best_model.pkl')
+best_model = joblib.load('best_model.pkl')
 
-# Print specified input parameters
-st.header('Specified Input parameters')
-st.write(df)
-st.write('---')
+prediction = best_model.predict(df_scaled)
 
-# Build Regression Model
-xgb_model = xgb.XGBRegressor(objective='reg:squarederror', random_state=42)
-xgb_model.fit(X_train, y_train)
-y_pred_xgb = xgb_model.predict(X_test)
-# Apply Model to Make Prediction
-prediction = model.predict(df)
-
-# Dự đoán (trong không gian đã scale)
-y_pred_scaled = model.predict(X_scaled)
-
-# Đảo ngược scale cho kết quả dự đoán
-y_pred_original = scaler_y.inverse_transform(y_pred_scaled.reshape(-1, 1))
-
-
+price = scaler_y.inverse_transform(prediction.reshape(-1, 1))
 
 st.header('Prediction of MEDV')
 st.write(prediction)
 st.write('---')
-
-# Explaining the model's predictions using SHAP values
-# https://github.com/slundberg/shap
-explainer = shap.TreeExplainer(model)
-shap_values = explainer.shap_values(X)
 
 st.header('Feature Importance')
 plt.title('Feature importance based on SHAP values')
