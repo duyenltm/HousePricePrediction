@@ -34,15 +34,15 @@ IQR = Q3 - Q1
 outlier_condition = (X_data < (Q1 - 1.5 * IQR)) | (X_data > (Q3 + 1.5 * IQR))
 data = data[~outlier_condition.any(axis=1)]
 
-scaler = MinMaxScaler()
-data[['price_scaled', 'area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(data[['price', 'Area Size', 'baths', 'bedrooms']])
-data = data.drop(columns=['price', 'Area Size', 'baths', 'bedrooms'])
-
 le = LabelEncoder()
 data['purpose'] = le.fit_transform(data['purpose'])
 data['property_type'] = le.fit_transform(data['property_type'])
 data['city'] = le.fit_transform(data['city'])
 data['location'] = le.fit_transform(data['location'])
+
+scaler = MinMaxScaler()
+data = scaler.fit_transform(data)
+data = data.drop(columns=['price', 'Area Size', 'baths', 'bedrooms'])
 
 X = data.drop(['price_scaled'], axis=1)
 y = data['price_scaled']
