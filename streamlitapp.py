@@ -63,7 +63,7 @@ def input():
     area_size = st.number_input('Area Size',1,1000)
     area_type = st.pills('Area Type', uni['area_type'].unique())
     area = area_size * 272.51 if area_type == 'Marla' else area_size * 5445
-    submitted = st.form_submit_button("Submit")
+    st.form_submit_button("Submit")
     if submitted:
       data = {'property_type': property_type,
               'location': location,
