@@ -46,7 +46,7 @@ data['location'] = le.fit_transform(data['location'])
 
 st.write(data)
 
-X = data.drop(['price_scaled', axis=1])
+X = data.drop(['price_scaled'], axis=1)
 y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
