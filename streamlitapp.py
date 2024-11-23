@@ -60,7 +60,7 @@ def input():
     baths = st.slider('Baths',1,7)
     purpose = st.pills('Purpose', uni['purpose'].unique())
     bedrooms = st.slider('Bedrooms',1,7)
-    area_size = st.numer_input('Area Size',1,1000)
+    area_size = st.number_input('Area Size',1,1000)
     area_type = st.pills('Area Type', uni['area_type'].unique())
     area = area_size * 272.51 if area_type == 'Marla' else area_size * 5445
     submitted = st.form_submit_button("Submit")
