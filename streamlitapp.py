@@ -52,25 +52,28 @@ y = data['price_scaled']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 def input():
-  property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
-  location = st.selectbox('Location', uni['location'].unique())
-  city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
-  baths = st.slider('Baths',1,7)
-  purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
-  bedrooms = st.slider('Bedrooms',1,7)
-  area_type = st.pills('Area Type', ['Marla', 'Kanal'])
-  area_size = st.number_input('Area Size', 0, 1000)
-  if area_type == 'Marla': area = area_size * 25.2929
-  else: area = area_size * 505.858
-  data = {'property_type': property_type,
-          'location': location,
-          'city': city,
-          'purpose': purpose,
-          'area_scaled': area,
-          'baths_scaled': baths,
-          'bedrooms_scaled': bedrooms}
-  features = pd.DataFrame(data, index=[0])
-  return features
+  with st.form("input_form"):
+    st.header("Enter House Details")
+    property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
+    location = st.selectbox('Location', uni['location'].unique())
+    city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
+    baths = st.slider('Baths',1,7)
+    purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
+    bedrooms = st.slider('Bedrooms',1,7)
+    area_type = st.pills('Area Type', ['Marla', 'Kanal'])
+    area = area_size * 272.51 if area_type == 'Marla' else area_size * 5445
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+      data = {'property_type': property_type,
+              'location': location,
+              'city': city,
+              'purpose': purpose,
+              'area_scaled': area,
+              'baths_scaled': baths,
+              'bedrooms_scaled': bedrooms}
+      return pd.DataFrame(input_data, index=[0])
+    else:
+      return None
 
 df = input()
 st.write(df)
