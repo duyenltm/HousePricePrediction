@@ -21,7 +21,7 @@ data.drop(data[data['price']==0].index, inplace = True)
 data.drop(data[data['baths']==0].index, inplace = True)
 data.drop(data[data['bedrooms']==0].index, inplace = True)
 data.drop(data[data['Area Size']==0].index, inplace = True)
-
+uni = data
 data['Area Size'] = data.apply(lambda row: row['Area Size'] * 272.51
                                if row['Area Type'] == 'Marla'
                                else row['Area Size'] * 5445, axis=1)
@@ -53,7 +53,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 def input():
   property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
-  location = st.selectbox('Location', data['location'].unique())
+  location = st.selectbox('Location', uni['location'].unique())
   city = st.pills('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
   baths = st.slider('Baths',1,7)
   purpose = st.pills('Purpose', ['For Sale', 'For Rent'])
