@@ -44,6 +44,8 @@ data['property_type'] = le.fit_transform(data['property_type'])
 data['city'] = le.fit_transform(data['city'])
 data['location'] = le.fit_transform(data['location'])
 
+st.print(data)
+
 X = data.drop(['price_scaled'])
 y = data['price_scaled']
 
