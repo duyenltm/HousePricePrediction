@@ -44,16 +44,16 @@ data['property_type'] = le.fit_transform(data['property_type'])
 data['city'] = le.fit_transform(data['city'])
 data['location'] = le.fit_transform(data['location'])
 
-st.print(data)
+st.write(data)
 
-X = data.drop(['price_scaled'])
+X = data.drop(['price_scaled', axis=1])
 y = data['price_scaled']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 def input():
   property_type = st.pills('Property Type', ['Flat', 'House', 'Penthouse', 'Upper Portion', 'Farm House', 'Lower Portion', 'Room'])
-        #location = st.selectbox('Location',
+  location = st.selectbox('Location', ['a', 'b'])
   city = st.segmented_control('City', ['Islamabad', 'Karachi', 'Faisalabad', 'Lahore', 'Rawalpindi'])
   baths = st.sliders('Baths', X.baths.min(), X.baths.max())
   purpose = st.segmented_control('Purpose', ['For Sale', 'For Rent'])
@@ -75,15 +75,15 @@ def input():
 df = input()
 df_scaled = df
 
-Ranfor_reg = RandomForestRegressor(random_state=42)
-Ranfor_reg.fit(X_train, y_train)
-y_pred = Ranfor_reg.predict(X_test)
+Tree_reg = RandomForestRegressor(random_state=42)
+Tree_reg.fit(X_train, y_train)
+y_pred = Tree_reg.predict(X_test)
 joblib.dump(Tree_reg, 'best_model.pkl')
 best_model = joblib.load('best_model.pkl')
 
 prediction = best_model.predict(df_scaled)
 
-price = scaler_y.inverse_transform(prediction.reshape(-1, 1))
+price = y.inverse_transform(prediction.reshape(-1, 1))
 
 st.header('Prediction of MEDV')
 st.write(prediction)
