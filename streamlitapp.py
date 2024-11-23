@@ -80,7 +80,6 @@ df_scaled = scaler.fit_transform(df)
 
 Tree_reg = RandomForestRegressor(random_state=42)
 Tree_reg.fit(X_train, y_train)
-y_pred = Tree_reg.predict(X_test)
 joblib.dump(Tree_reg, 'best_model.pkl')
 best_model = joblib.load('best_model.pkl')
 
