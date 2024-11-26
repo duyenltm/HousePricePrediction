@@ -13,8 +13,7 @@ url = 'https://drive.google.com/file/d/1HPzLNrEIBduaatuEsf7EDWJ2_J0f4T2N/view?us
 url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
 data = pd.read_csv(url)
 
-data = data.drop(columns=['property_id','page_url', 'location_id', 'province_name', 'latitude', 'longitude', 'date_added', 'agency', 'agent','Area Category'])
-data.head()
+data = data.drop(columns=['property_id','page_url', 'location_id', 'province_name','area', 'latitude', 'longitude', 'date_added', 'agency', 'agent','Area Category' ])
 data.drop_duplicates(inplace=True)
 data.dropna(inplace=True)
 data.drop(data[data['price']==0].index, inplace = True)
