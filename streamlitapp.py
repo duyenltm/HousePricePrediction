@@ -42,6 +42,8 @@ data['location'] = le.fit_transform(data['location'])
 scaler = MinMaxScaler()
 data = scaler.fit_transform(data)
 
+st.write(data)
+
 X = data.drop(['price'], axis=1)
 y = data['price']
 
