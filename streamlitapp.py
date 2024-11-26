@@ -79,12 +79,12 @@ joblib.dump(Tree_reg, 'best_model.pkl')
 best_model = joblib.load('best_model.pkl')
 
 def process_input(df):
-  df['purpose'] = le.tranform(df['purpose'])
-  df['property_type'] = le.tranform(df['property_type'])
-  df['city'] = le.tranform(df['city'])
-  df['location'] = le.tranform(df['location'])
-  df['area_scaled', 'baths_scaled', 'bedrooms_scaled'] = scaler.transform(df['Area Size', 'baths', 'bedrooms'])
-  df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
+  df['purpose'] = le.transform(df['purpose'])
+  df['property_type'] = le.transform(df['property_type'])
+  df['city'] = le.transform(df['city'])
+  df['location'] = le.transform(df['location'])
+  df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.transform(df[['Area Size', 'baths', 'bedrooms']])
+  df = df.drop(columns=['Area Size', 'baths', 'bedrooms'])
   return df
 
 if df is not None:
