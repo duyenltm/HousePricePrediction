@@ -63,10 +63,11 @@ def input():
       data = {'property_type': property_type,
               'location': location,
               'city': city,
-              'purpose': purpose,
-              'area': area,
               'baths': baths,
-              'bedrooms': bedrooms}
+              'purpose': purpose,
+              'bedrooms': bedrooms,
+              'area_size': area_size,
+              'area_type': area_type}
       return pd.DataFrame(input, index=[0])
     else:
       return None
@@ -74,8 +75,10 @@ def input():
 df = input()
 st.write(df)
 
-df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['Area Size', 'baths', 'bedrooms']])
-df = df.drop(columns=['Area Size', 'baths', 'bedrooms'])
+df['area_size'] = df.apply(lambda row: row['area_size'] * 25.2929 if row['area_type'] == 'Marla' else row['area_size'] * 505.858, axis=1)
+
+df['area_scaled', 'baths_scaled', 'bedrooms_scaled'] = scaler.fit_transform(df['area_size', 'baths', 'bedrooms'])
+df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
 
 df['purpose'] = le.fit_transform(df['purpose'])
 df['property_type'] = le.fit_transform(df['property_type'])
@@ -92,5 +95,5 @@ prediction = best_model.predict(df_scaled)
 price = scaler.inverse_transform(prediction.reshape(-1, 1))
 
 st.header('Prediction of MEDV')
-st.write(prediction)
+st.write(price)
 st.write('---')
