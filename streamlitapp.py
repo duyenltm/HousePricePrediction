@@ -56,7 +56,7 @@ def input():
     baths = st.slider('Baths',1,7)
     purpose = st.pills('Purpose', uni['purpose'].unique())
     bedrooms = st.slider('Bedrooms',1,7)
-    area_size = st.number_input('Area Size (m^2)',1,600)
+    area_size = st.number_input('Area Size (m^2)',1,600, format="%.2f")
     submitted = st.form_submit_button("Submit")
     if submitted:
       data = {'property_type': property_type,
