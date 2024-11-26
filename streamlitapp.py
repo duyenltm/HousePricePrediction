@@ -58,22 +58,29 @@ def input():
     bedrooms = st.slider('Bedrooms',1,7)
     area_size = st.number_input('Area Size',1,1000)
     area_type = st.pills('Area Type', ['Marla', 'Kanal'])
-    area = area_size * 272.51 if area_type == 'Marla' else area_size * 5445
     submitted = st.form_submit_button("Submit")
     if submitted:
       data = {'property_type': property_type,
               'location': location,
               'city': city,
               'purpose': purpose,
-              'area_scaled': area,
-              'baths_scaled': baths,
-              'bedrooms_scaled': bedrooms}
-      return pd.DataFrame(input_data, index=[0])
+              'area': area,
+              'baths': baths,
+              'bedrooms': bedrooms}
+      return pd.DataFrame(input, index=[0])
     else:
       return None
 
 df = input()
 st.write(df)
+
+df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['Area Size', 'baths', 'bedrooms']])
+df = df.drop(columns=['Area Size', 'baths', 'bedrooms'])
+
+df['purpose'] = le.fit_transform(df['purpose'])
+df['property_type'] = le.fit_transform(df['property_type'])
+df['city'] = le.fit_transform(df['city'])
+df['location'] = le.fit_transform(df['location'])
 
 Tree_reg = RandomForestRegressor(random_state=42)
 Tree_reg.fit(X_train, y_train)
