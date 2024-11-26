@@ -86,7 +86,7 @@ Tree_reg.fit(X_train, y_train)
 joblib.dump(Tree_reg, 'best_model.pkl')
 best_model = joblib.load('best_model.pkl')
 
-prediction = best_model.predict(df_scaled)
+prediction = best_model.predict(df)
 
 price = scaler.inverse_transform(prediction.reshape(-1, 1))
 
