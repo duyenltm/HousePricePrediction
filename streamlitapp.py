@@ -63,7 +63,7 @@ def input():
               'location': location,
               'city': city,
               'purpose': purpose,
-              'area_size': area_size,
+              'Area Size': area_size,
               'baths': baths,
               'bedrooms': bedrooms}
       return pd.DataFrame([data])
@@ -83,7 +83,7 @@ def process_input(df):
   df['property_type'] = le.fit_transform(df['property_type'])
   df['city'] = le.fit_transform(df['city'])
   df['location'] = le.fit_transform(df['location'])
-  df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.transform(df[['area_size', 'baths', 'bedrooms']])
+  df['area_scaled', 'baths_scaled', 'bedrooms_scaled'] = scaler.transform(df['Area Size', 'baths', 'bedrooms'])
   df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
   return df
 
