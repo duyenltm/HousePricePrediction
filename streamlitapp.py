@@ -21,9 +21,7 @@ data.drop(data[data['baths']==0].index, inplace = True)
 data.drop(data[data['bedrooms']==0].index, inplace = True)
 data.drop(data[data['Area Size']==0].index, inplace = True)
 uni = data
-data['Area Size'] = data.apply(lambda row: row['Area Size'] * 272.51
-                               if row['Area Type'] == 'Marla'
-                               else row['Area Size'] * 5445, axis=1)
+data['Area Size'] = data.apply(lambda row: row['Area Size'] * 25.2929 if row['Area Type'] == 'Marla' else row['Area Size'] * 505.858, axis=1)
 data.drop(['Area Type'], axis = 1, inplace = True)
 
 X_data = data.select_dtypes(include=['float64', 'int64'])
@@ -32,15 +30,17 @@ Q3 = X_data.quantile(0.75)
 IQR = Q3 - Q1
 outlier_condition = (X_data < (Q1 - 1.5 * IQR)) | (X_data > (Q3 + 1.5 * IQR))
 data = data[~outlier_condition.any(axis=1)]
+data.reset_index(drop=True, inplace=True)
+
+scaler = MinMaxScaler()
+data[['price_scaled', 'area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(data[['price', 'Area Size', 'baths', 'bedrooms']])
+data = data.drop(columns=['price', 'Area Size', 'baths', 'bedrooms'])
 
 le = LabelEncoder()
 data['purpose'] = le.fit_transform(data['purpose'])
 data['property_type'] = le.fit_transform(data['property_type'])
 data['city'] = le.fit_transform(data['city'])
 data['location'] = le.fit_transform(data['location'])
-
-scaler = MinMaxScaler()
-data = scaler.fit_transform(data)
 
 st.write(data)
 
