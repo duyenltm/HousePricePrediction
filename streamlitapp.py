@@ -63,7 +63,7 @@ def input():
               'location': location,
               'city': city,
               'purpose': purpose,
-              'area': area_size,
+              'area_size': area_size,
               'baths': baths,
               'bedrooms': bedrooms}
       return pd.DataFrame([data])
@@ -72,6 +72,12 @@ def input():
 
 df = input()
 st.write(df)
+
+Tree_reg = RandomForestRegressor(random_state=42)
+Tree_reg.fit(X_train, y_train)
+joblib.dump(Tree_reg, 'best_model.pkl')
+best_model = joblib.load('best_model.pkl')
+
 
 def process_input(df):
   df['purpose'] = le.fit_transform(df['purpose'])
@@ -84,7 +90,7 @@ def process_input(df):
 
 if df is not None:
   df_processed = process_input(df)
-  prediction = Tree_reg.predict(df_processed)
-  price = scaler.inverse_transform([[0, 0, 0, prediction[0]]])[:, 3]
+  prediction = best_model.predict(df_processed)
+  price = scaler.inverse_transform([[0, 0, 0, prediction[0]]])[0, -1]
   st.header('Prediction of House Price')
   st.write(f"Estimated Price: {price[0]:,.2f} PKR")
