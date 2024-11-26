@@ -62,11 +62,10 @@ def input():
       data = {'property_type': property_type,
               'location': location,
               'city': city,
-              'baths': baths,
+              'baths_scaled': baths,
               'purpose': purpose,
-              'bedrooms': bedrooms,
-              'area_size': area_size,
-              'area_type': area_type}
+              'bedrooms_scaled': bedrooms,
+              'area_scaled': area_size}
       return pd.DataFrame([data])
     else:
       return None
@@ -74,10 +73,8 @@ def input():
 df = input()
 st.write(df)
 
-#df['area_size'] = df.apply(lambda row: row['area_size'] * 25.2929 if row['area_type'] == 'Marla' else row['area_size'] * 505.858, axis=1)
-
-df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['area_size', 'baths', 'bedrooms']])
-df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
+#df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['area_size', 'baths', 'bedrooms']])
+#df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
 
 df['purpose'] = le.fit_transform(df['purpose'])
 df['property_type'] = le.fit_transform(df['property_type'])
