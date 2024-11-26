@@ -40,6 +40,8 @@ data['property_type'] = le.fit_transform(data['property_type'])
 data['city'] = le.fit_transform(data['city'])
 data['location'] = le.fit_transform(data['location'])
 
+st.write(data)
+
 scaler = MinMaxScaler()
 data = scaler.fit_transform(data)
 data = data.drop(columns=['price', 'Area Size', 'baths', 'bedrooms'])
