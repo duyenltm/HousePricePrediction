@@ -62,10 +62,10 @@ def input():
       data = {'property_type': property_type,
               'location': location,
               'city': city,
-              'baths_scaled': baths,
               'purpose': purpose,
-              'bedrooms_scaled': bedrooms,
-              'area_scaled': area_size}
+              'area': area_size,
+              'baths': baths,
+              'bedrooms': bedrooms}
       return pd.DataFrame([data])
     else:
       return None
@@ -73,24 +73,28 @@ def input():
 df = input()
 st.write(df)
 
-#df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['area_size', 'baths', 'bedrooms']])
-#df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
-
-#df['purpose'] = le.fit_transform(df['purpose'])
-#df['property_type'] = le.fit_transform(df['property_type'])
-#df['city'] = le.fit_transform(df['city'])
-#df['location'] = le.fit_transform(df['location'])
+def process_input(df):
+  df['purpose'] = le.fit_transform(df['purpose'])
+  df['property_type'] = le.fit_transform(df['property_type'])
+  df['city'] = le.fit_transform(df['city'])
+  df['location'] = le.fit_transform(df['location'])
+  df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['area_size', 'baths', 'bedrooms']])
+  df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
+  return df
 
 Tree_reg = RandomForestRegressor(random_state=42)
 Tree_reg.fit(X_train, y_train)
-#joblib.dump(Tree_reg, 'best_model.pkl')
-#best_model = joblib.load('best_model.pkl')
-#prediction = best_model.predict(df)
+joblib.dump(Tree_reg, 'best_model.pkl')
+best_model = joblib.load('best_model.pkl')
+prediction = best_model.predict(df)
 
 prediction = Tree_reg.predict(df)
 
 price = scaler.inverse_transform(prediction.reshape(-1, 1))
 
-st.header('Prediction of MEDV')
-st.write(price)
-st.write('---')
+if df is not None:
+  df_processed = process_input(df)
+  prediction = Tree_reg.predict(df_processed)
+  price = scaler.inverse_transform([[0, 0, 0, prediction[0]]])[:, 3]
+  st.header('Prediction of House Price')
+  st.write(f"Estimated Price: {price[0]:,.2f} PKR")
