@@ -68,7 +68,7 @@ def input():
               'bedrooms': bedrooms,
               'area_size': area_size,
               'area_type': area_type}
-      return pd.DataFrame(input, index=[0])
+      return pd.DataFrame([data])
     else:
       return None
 
