@@ -77,7 +77,7 @@ st.write(df)
 
 df['area_size'] = df.apply(lambda row: row['area_size'] * 25.2929 if row['area_type'] == 'Marla' else row['area_size'] * 505.858, axis=1)
 
-df['area_scaled', 'baths_scaled', 'bedrooms_scaled'] = scaler.fit_transform(df['area_size', 'baths', 'bedrooms'])
+df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['area_size', 'baths', 'bedrooms']])
 df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
 
 df['purpose'] = le.fit_transform(df['purpose'])
