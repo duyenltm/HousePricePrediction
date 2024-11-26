@@ -59,6 +59,7 @@ def input():
     area_size = st.number_input('Area Size',1,1000)
     area_type = st.pills('Area Type', ['Marla', 'Kanal'])
     submitted = st.form_submit_button("Submit")
+    area_size = (lambda row: area_size * 25.2929 if area_type == 'Marla' else area_size * 505.858, axis=1)
     if submitted:
       data = {'property_type': property_type,
               'location': location,
@@ -75,7 +76,7 @@ def input():
 df = input()
 st.write(df)
 
-df['area_size'] = df.apply(lambda row: row['area_size'] * 25.2929 if row['area_type'] == 'Marla' else row['area_size'] * 505.858, axis=1)
+#df['area_size'] = df.apply(lambda row: row['area_size'] * 25.2929 if row['area_type'] == 'Marla' else row['area_size'] * 505.858, axis=1)
 
 df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['area_size', 'baths', 'bedrooms']])
 df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
