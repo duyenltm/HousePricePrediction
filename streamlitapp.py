@@ -82,16 +82,6 @@ def process_input(df):
   df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
   return df
 
-Tree_reg = RandomForestRegressor(random_state=42)
-Tree_reg.fit(X_train, y_train)
-joblib.dump(Tree_reg, 'best_model.pkl')
-best_model = joblib.load('best_model.pkl')
-prediction = best_model.predict(df)
-
-prediction = Tree_reg.predict(df)
-
-price = scaler.inverse_transform(prediction.reshape(-1, 1))
-
 if df is not None:
   df_processed = process_input(df)
   prediction = Tree_reg.predict(df_processed)
