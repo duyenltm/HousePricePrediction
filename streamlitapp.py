@@ -78,7 +78,6 @@ Tree_reg.fit(X_train, y_train)
 joblib.dump(Tree_reg, 'best_model.pkl')
 best_model = joblib.load('best_model.pkl')
 
-
 def process_input(df):
   df['purpose'] = le.fit_transform(df['purpose'])
   df['property_type'] = le.fit_transform(df['property_type'])
@@ -94,3 +93,5 @@ if df is not None:
   price = scaler.inverse_transform([[0, 0, 0, prediction[0]]])[0, -1]
   st.header('Prediction of House Price')
   st.write(f"Estimated Price: {price[0]:,.2f} PKR")
+  else:
+    st.write("Please enter the house details to get a price prediction.")
