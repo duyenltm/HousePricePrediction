@@ -90,8 +90,7 @@ def process_input(df):
 if df is not None:
   df_processed = process_input(df)
   prediction = best_model.predict(df_processed)
-  price = prediction[0] * (scaler.data_max_[-1] - scaler.data_min_[-1]) + scaler.data_min_[-1]
+  price_index = list(data.columns).index('price_scaled')
+  price = prediction[0] * (scaler.data_max_[price_index] - scaler.data_min_[price_index]) + scaler.data_min_[price_index]
   st.header('Prediction of House Price')
   st.write(f"Estimated Price: {price[0]:,.2f} PKR")
-else:
-  st.write("Please enter the house details to get a price prediction.")
