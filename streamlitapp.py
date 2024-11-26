@@ -83,15 +83,15 @@ def process_input(df):
   df['property_type'] = le.fit_transform(df['property_type'])
   df['city'] = le.fit_transform(df['city'])
   df['location'] = le.fit_transform(df['location'])
-  df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.fit_transform(df[['area_size', 'baths', 'bedrooms']])
+  df[['area_scaled', 'baths_scaled', 'bedrooms_scaled']] = scaler.transform(df[['area_size', 'baths', 'bedrooms']])
   df = df.drop(columns=['area_size', 'baths', 'bedrooms'])
   return df
 
 if df is not None:
   df_processed = process_input(df)
   prediction = best_model.predict(df_processed)
-  price = scaler.inverse_transform([[0, 0, 0, prediction[0]]])[0, -1]
+  price = prediction[0] * (scaler.data_max_[-1] - scaler.data_min_[-1]) + scaler.data_min_[-1]
   st.header('Prediction of House Price')
   st.write(f"Estimated Price: {price[0]:,.2f} PKR")
-  else:
-    st.write("Please enter the house details to get a price prediction.")
+else:
+  st.write("Please enter the house details to get a price prediction.")
