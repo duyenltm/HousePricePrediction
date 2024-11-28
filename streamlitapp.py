@@ -69,6 +69,7 @@ def input():
       return pd.DataFrame([data])
     else:
       return None
+st.write(data)
 
 df = input()
 st.write(df)
