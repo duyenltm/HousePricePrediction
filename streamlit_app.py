@@ -14,7 +14,8 @@ url = 'https://drive.google.com/file/d/1HPzLNrEIBduaatuEsf7EDWJ2_J0f4T2N/view?us
 url = 'https://drive.google.com/uc?id=' + url.split('/')[-2]
 data = pd.read_csv(url)
 
-data = data.drop(columns=['property_id','page_url', 'location_id', 'province_name','area', 'latitude', 'longitude', 'date_added', 'agency', 'agent','Area Category' ])
+data = data.drop(columns=['property_id','page_url', 'location_id', 'province_name','area', 'latitude', 
+                          'longitude', 'date_added', 'agency', 'agent','Area Category' ])
 data.drop_duplicates(inplace=True)
 data.dropna(inplace=True)
 data.drop(data[data['price']==0].index, inplace = True)
@@ -22,7 +23,8 @@ data.drop(data[data['baths']==0].index, inplace = True)
 data.drop(data[data['bedrooms']==0].index, inplace = True)
 data.drop(data[data['Area Size']==0].index, inplace = True)
 uni = data
-data['area'] = data.apply(lambda row: row['Area Size'] * 25.2929 if row['Area Type'] == 'Marla' else row['Area Size'] * 505.858, axis=1)
+data['area'] = data.apply(lambda row: row['Area Size'] * 25.2929 if row['Area Type'] == 'Marla' 
+                          else row['Area Size'] * 505.858, axis=1)
 data = data.drop(columns=['Area Type', 'Area Size'])
 
 X_data = data.select_dtypes(include=['float64', 'int64'])
