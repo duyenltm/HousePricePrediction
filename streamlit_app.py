@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import DecisionTreeRegressor
 
 st.title('Pakistan House Price Prediction')
 st.write('---')
@@ -78,8 +78,8 @@ def input():
 df = input()
 st.write(df)
 
-Tree_reg = RandomForestRegressor(random_state=42)
-Tree_reg.fit(X_train, y_train)
+Ranfor_reg = RandomForestRegressor(random_state=42)
+Ranfor_reg.fit(X_train, y_train)
 
 def process_input(df):
   for col, le in label_encoders.items():
@@ -90,7 +90,7 @@ def process_input(df):
 if df is not None:
   df_processed = process_input(df)
   df_processed = df_processed.values.reshape(1, -1)
-  prediction = Tree_reg.predict(df_processed)
+  prediction = Ranfor_reg.predict(df_processed)
   price = prediction[0] * (scaler_price.data_max_[0] - scaler_price.data_min_[0]) + scaler_price.data_min_[0]
   st.success("Prediction complete!")
   st.subheader(f"The predicted house price is: {price:.2f}")
